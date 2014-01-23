@@ -104,16 +104,22 @@ namespace Simon
             {
                 // TODO: After 1 second add a random move
 
-                // moves.Add((SimonColors)rand.Next(0, 4));
-                // turn = Turn.PLAYBACK;
-                // PlayBackIndex = 0;
+                moves.Add((SimonColors)rand.Next(0, 4));
+                turn = Turn.PLAYBACK;
+                PlayBackIndex = 0;
             }
             else if (turn == Turn.PLAYBACK)
             {
                 // TODO: Play one move every 750ms.. 
                 // DO NOT PLAY BACK ALL MOVES AT ONCE
+                // TargetElapsedTime = 750; ResetElapsedTime = 750; IsFixedTimeStep = 750; 
 
                 // If PlayBackIndex == moves.Count then turn = Turn.PLAYER (and set PlayerTurnIndex to 0)
+                if (PlayBackIndex == moves.Count)
+                {
+                    turn = Turn.PLAYER;
+                    PlayerTurnIndex = 0;
+                }
             }
             else if (turn == Turn.PLAYER)
             {
@@ -129,6 +135,7 @@ namespace Simon
                     {
                         // do something here!  Maybe see if Lit was the correct button to press?
 
+
                         SoundManager.PlaySimonSound(Lit);
                     }
                 }
@@ -141,7 +148,7 @@ namespace Simon
                 turn = Turn.COMPUTER;
                 Lit = SimonColors.NONE;
             }
-
+            
             base.Update(gameTime);
         }
 
@@ -218,8 +225,28 @@ namespace Simon
 
                 // Maybe we shouldn't draw all the highlights?   Just the "Lit" one perhaps?   But here's the code if you want to..
 
+                if (Lit == SimonColors.GREEN)
+                {
+                    spriteBatch.Draw(simon, new Rectangle(46, 40, 238, 243), new Rectangle(0, 0, 238, 243), Color.White);
+                }
+
+                if (Lit == SimonColors.RED)
+                {
+                    spriteBatch.Draw(simon, new Rectangle(46 + 277, 40, 238, 243), new Rectangle(277, 0, 238, 243), Color.White);
+                }
+
+                if (Lit == SimonColors.YELLOW)
+                {
+                    spriteBatch.Draw(simon, new Rectangle(46, 40 + 276, 238, 243), new Rectangle(0, 276, 238, 243), Color.White);
+                }
+
+                if (Lit == SimonColors.BLUE)
+                {
+                    spriteBatch.Draw(simon, new Rectangle(46 + 277, 40 + 276, 238, 243), new Rectangle(277, 276, 238, 243), Color.White);
+                }
+
                 // Draw green hightlight (note that this shouldn't ALWAYS been drawn)
-                spriteBatch.Draw(simon, new Rectangle(46, 40, 238, 243), new Rectangle(0, 0, 238, 243), Color.White);
+                // spriteBatch.Draw(simon, new Rectangle(46, 40, 238, 243), new Rectangle(0, 0, 238, 243), Color.White);
 
                 // Draw red hightlight (note that this shouldn't ALWAYS been drawn)
                 // spriteBatch.Draw(simon, new Rectangle(46 + 277, 40, 238, 243), new Rectangle(277, 0, 238, 243), Color.White);
